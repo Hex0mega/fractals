@@ -11,8 +11,8 @@ var svg = d3.select("body").append("svg")
 
 svg.append("rect")
   .attr("width", width)
-  .attr("height", height);
-//.on("ontouchstart" in document ? "touchmove" : "mousemove", particle);
+  .attr("height", height)
+  .on("ontouchstart" in document ? "touchmove" : "mousemove", particle);
 
 function particle() {
 
@@ -22,7 +22,7 @@ function particle() {
   //m[0] = x coordinate
   //m[1] = y coordinate
   //r = radius
-  // var m = d3.mouse(this);
+  var m = d3.mouse(this);
 
   var cx = 1000 * Math.random();
   var cy = 1000 * Math.random();
@@ -33,8 +33,8 @@ function particle() {
   console.log(screen.width);
 
   svg.insert("circle", "rect")
-    .attr("cx", cx)
-    .attr("cy", cy)
+    .attr("cx", m[0])
+    .attr("cy", m[1])
     .attr("r", 1000)
     //color - 1 - red, 20 - red-green, 360 - more colors
     .style("stroke", d3.hsl((i = (i + 1) % 1), -.5, 0.5))
