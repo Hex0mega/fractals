@@ -1,5 +1,5 @@
-var width = Math.max(1366, innerWidth),
-  height = Math.max(970, innerHeight);
+var width = innerWidth,
+  height = innerHeight;
 
 var i = 0;
 
@@ -14,7 +14,7 @@ svg.append("rect")
 
 var j = 0;
 
-setInterval(particle, 20);
+setInterval(particle, 10);
 // setInterval(particle2, 50)
 
 function particle() {
@@ -29,7 +29,8 @@ function particle() {
   //var m = [width / 2, height / 2];
   //var m = [height * Math.tan(j) + height, width * Math.tan(j) + width]
   //good with radius of 500-700
-  var m = [(width * Math.sin(j) + width)/3 + 190, height/2 * Math.cos(j) + height/2 - 150]
+  var radius = height / 2;
+  var m = [(height * Math.sin(j) + 2 * height) / 2, (height * Math.cos(j) + height) / 2];
 
   // console.log(Math.abs(Math.sin(m[0]) * m[0]));
   // console.log(Math.abs(Math.sin(m[1]) * m[1]));
@@ -37,22 +38,33 @@ function particle() {
   svg.insert("circle", "rect")
     .attr("cx", m[0])
     .attr("cy", m[1])
-    .attr("r", 500)
+    .attr("r", radius)
     //color - 1 - red, 20 - red-green, 360 - more colors
     //color 0.5/0.5 and bw:1,1
     .style("stroke", d3.hsl((i = (i + 1) % 360), 0.5, 0.5))
     .style("stroke-opacity", 1e-6)
     .transition()
     //in milliseconds - 3000 ms*(1seconds/1000 ms) = 3 seconds
-    .duration(40000)
+    .duration(50000)
     //sqrt and sinh are best.  sin, cos,tan, tanh, atan, struggle removing objects fast 
-    .ease(Math.sqrt)
+    .ease(d3.easeElasticIn)
     //radius of circle in pixels
     .attr("r", 1e-6)
     .style("stroke-opacity", 1)
-    .remove();
+    //.remove();
 
-  j = (j + 1) % 720;
+  j = (j + 1) % 1080;
+  // if (j >= 500) {
+  //   d3.select("svg")
+  //   .remove();
+    
+  //   svg = d3.select("body")
+  //   .append("svg")
+  //   .attr("width", width)
+  //   .attr("height", height);
+
+  // }
+
   // d3.event.preventDefault();
 }
 
